@@ -35,17 +35,6 @@ pipeline {
             }
         }
 
-        stage('Process JSON') {
-            steps {
-                script {
-                    // Example of reading a JSON file if required
-                    def jsonFile = readFile 'path/to/your.json'
-                    echo "JSON content: ${jsonFile}"
-                    
-                    // Additional processing steps can go here
-                }
-            }
-        }
 
         stage('Deploy') {
             steps {
