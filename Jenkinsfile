@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        NODE_HOME = "/usr/local/bin/node"
+        PATH = "${NODE_HOME}/bin:${env.PATH}"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,16 +14,48 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install yarn if not already installed
+                    sh 'npm install -g yarn'
+
+                    // Install project dependencies
+                    sh 'yarn install'
+                }
+            }
+        }
+
+        stage('Build Project') {
+            steps {
+                script {
+                    // Build the project using Vite
+                    sh 'yarn build'
+                }
+            }
+        }
+
         stage('Process JSON') {
             steps {
                 script {
-                    // Process or deploy the JSON file
-                    def jsonFile = readFile 'path/to/your.json'
+                    // Example of reading a JSON file if required
+                    // Replace '/.json' with the actual path to your JSON file
+                    def jsonFile = readFile '/.json'
                     echo "JSON content: ${jsonFile}"
                     
-                    // You can add any deployment steps here, e.g., copying to a server
+                    // Additional processing steps can go here
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deployment steps
+                    // You can add commands here to deploy the built project to your server
                 }
             }
         }
     }
 }
+
