@@ -39,8 +39,7 @@ pipeline {
             steps {
                 script {
                     // Example of reading a JSON file if required
-                    // Replace '/.json' with the actual path to your JSON file
-                    def jsonFile = readFile '/.json'
+                    def jsonFile = readFile 'path/to/your.json'
                     echo "JSON content: ${jsonFile}"
                     
                     // Additional processing steps can go here
@@ -58,4 +57,3 @@ pipeline {
         }
     }
 }
-
